@@ -1,0 +1,23 @@
+.login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.loginForm {
+  margin-top: 20px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 3px solid #86ccd3;
+  border-radius: 8px;
+  width: 400px;
+}
+
+.title {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #2000b9;
+}

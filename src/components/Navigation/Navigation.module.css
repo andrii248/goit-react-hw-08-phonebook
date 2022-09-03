@@ -1,0 +1,12 @@
+.inactive {
+  display: inline-block;
+  text-decoration: none;
+  color: #000;
+  font-weight: 600;
+}
+
+.active,
+.inactive:hover {
+  color: #2000b9;
+  text-decoration: underline;
+}
