@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import css from './ContactForm.module.css';
 import {
   useGetContactsQuery,
@@ -6,12 +6,13 @@ import {
 } from 'redux/contactsSlice';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { RotatingLines } from 'react-loader-spinner';
 
 export default function ContactForm() {
   const { data } = useGetContactsQuery();
-  const [addContact] = useAddContactMutation();
+  const [addContact, { isLoading, isSuccess }] = useAddContactMutation();
 
-  const [phone, setPhone] = useState('');
+  const [number, setNumber] = useState('');
   const [name, setName] = useState('');
 
   const handleChange = e => {
@@ -19,8 +20,8 @@ export default function ContactForm() {
     if (name === 'name') {
       setName(value);
     }
-    if (name === 'phone') {
-      setPhone(value);
+    if (name === 'number') {
+      setNumber(value);
     }
   };
 
@@ -36,14 +37,17 @@ export default function ContactForm() {
       return;
     }
 
-    addContact({ name: name, phone: phone });
+    if (isSuccess) {
+      addContact({ name: name, number: number });
+    }
+    addContact({ name: name, number: number });
 
     resetForm();
   };
 
   const resetForm = () => {
     setName('');
-    setPhone('');
+    setNumber('');
   };
 
   return (
@@ -65,14 +69,26 @@ export default function ContactForm() {
         <input
           onChange={handleChange}
           type="tel"
-          name="phone"
-          value={phone}
+          name="number"
+          value={number}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
         />
       </label>
-      <button type="submit">Add new contact</button>
+      <button type="submit" disabled={isLoading}>
+        {isLoading ? (
+          <RotatingLines
+            strokeColor="grey"
+            strokeWidth="5"
+            animationDuration="0.75"
+            width="96"
+            visible={true}
+          />
+        ) : (
+          'Add new contact'
+        )}
+      </button>
     </form>
   );
 }
