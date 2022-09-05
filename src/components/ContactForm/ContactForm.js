@@ -40,7 +40,6 @@ export default function ContactForm() {
     if (isSuccess) {
       addContact({ name: name, number: number });
     }
-    addContact({ name: name, number: number });
 
     resetForm();
   };
